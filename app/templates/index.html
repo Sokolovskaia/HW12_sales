@@ -5,18 +5,41 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Рабочее место продавца</title>
 </head>
 <body>
 
-Рабочее место продавца
+<div class="container">
 
-{% for item in items %}
-<p>{{ item.vendor_code }}</p>
-<p>{{ item.product_name }}</p>
-<p>{{ item.price }}</p>
-<p>{{ item.quantity }}</p>
-{% endfor %}
 
+    <h3>Рабочее место продавца</h3>
+
+    <table class="table table-hover">
+        <caption class="h3 font-weight-bold text-center">Перечень товаров на складе</caption>
+
+        <thead>
+        <tr>
+            <th scope="col">Артикул</th>
+            <th scope="col">Наименование товара</th>
+            <th scope="col">Цена, руб.</th>
+            <th scope="col">Количество, штук</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+        <tr>
+            <td> <a href="{{ url_for('details_of_product', vendor_code=item.vendor_code) }}">  {{ item.vendor_code }}</a></td>
+            <td>{{ item.product_name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <p><a class="btn btn-info" href="{{ url_for('add_product') }}">Добавить товар</a></p>
+</div>
 </body>
 </html>

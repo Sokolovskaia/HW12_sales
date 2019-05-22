@@ -27,7 +27,9 @@ def init_db(connection):
 def get_all(connection):
     with connection:
         cursor = connection.cursor()
-        cursor.execute('SELECT vendor_code, product_name, price, quantity  FROM products')
+        cursor.execute("""
+        SELECT vendor_code, product_name, price, quantity  
+          FROM products""")
         items = []
         for row in cursor:  # [Row, Row] -> [Good, Good]
             items.append(
@@ -41,3 +43,40 @@ def get_all(connection):
         return items
 
 
+def search_by_vendor_code(connection, vendor_code):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute(
+            """SELECT vendor_code, product_name, price, quantity 
+                 FROM products 
+                WHERE vendor_code = :vendor_code""",
+            {'vendor_code': vendor_code}
+        )
+        for row in cursor:
+            return Products(
+                row['vendor_code'],
+                row['product_name'],
+                row['price'],
+                row['quantity']
+            )
+
+
+def add(connection, product):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+        INSERT INTO products(vendor_code, product_name, price, quantity) 
+             VALUES (:vendor_code, :product_name, :price, :quantity)
+        """, {'vendor_code': product.vendor_code, 'product_name': product.product_name, 'price': product.price,
+              'quantity': product.quantity})
+        connection.commit()
+
+
+def remove_by_vendor_code(connection, vendor_code):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+        DELETE FROM products
+              WHERE vendor_code = :vendor_code
+        """, {'vendor_code': vendor_code})
+        connection.commit()
