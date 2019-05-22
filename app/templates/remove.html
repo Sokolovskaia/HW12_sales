@@ -10,12 +10,16 @@
     <title>Удаление товара</title>
 </head>
 <body>
+<div class="container">
+    <p>
 
-<h1>Вы уверены, что хотите удалить {{ item.product_name }} ( Артикул: {{ item.vendor_code }})?</h1>
+    </p>
+<h2>Вы уверены, что хотите удалить следующий товар:
+    <p>{{ item.product_name }} ( Артикул: {{ item.vendor_code }})?</p></h2>
 <form action="{{ url_for('remove', vendor_code=item.vendor_code) }}" method="post">
-    <button>Удалить</button>
-
+    <button type="submit" class="btn btn-danger">Удалить</button>
 
 </form>
+</div>
 </body>
 </html>

@@ -80,3 +80,15 @@ def remove_by_vendor_code(connection, vendor_code):
               WHERE vendor_code = :vendor_code
         """, {'vendor_code': vendor_code})
         connection.commit()
+
+
+def edit_by_vendor_code(connection, product):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+        UPDATE products 
+        SET vendor_code = :vendor_code, product_name = :product_name, price = :price, quantity = :quantity
+        WHERE vendor_code = :vendor_code
+        """, {'vendor_code': product.vendor_code, 'product_name': product.product_name, 'price': product.price,
+              'quantity': product.quantity})
+        connection.commit()

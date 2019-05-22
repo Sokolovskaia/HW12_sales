@@ -47,7 +47,19 @@ def start():
         return redirect(url_for('index'))
 
 
+    @app.route("/edit_product/<vendor_code>", methods=['GET'])
+    def edit_form(vendor_code):
+        search_by_vendor_code_result = db.search_by_vendor_code(db.open_db(db_url), vendor_code)
+        return render_template('edit_product.html', item=search_by_vendor_code_result)
 
+    @app.route("/edit_product/<vendor_code>", methods=['POST'])
+    def edit(vendor_code):
+        product_name = request.form['product_name']
+        price = int(request.form['price'])
+        quantity = int(request.form['quantity'])
+        product = Products(vendor_code, product_name, price, quantity)
+        db.edit_by_vendor_code(db.open_db(db_url), product)
+        return redirect(url_for('index', vendor_code=vendor_code))
 
 
 

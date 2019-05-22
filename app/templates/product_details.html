@@ -13,7 +13,7 @@
 
 <div class="card" style="width: 38rem;">
   <div class="card-body">
-    <h2 class="card-title">Наименование товара:  {{ item.product_name }}</h2>
+      <h3 class="card-title">Наименование товара:  <p class="h3 text-left font-weight-bold">{{ item.product_name }}</p></h3>
     <p class="card-text">Артикул:  {{ item.vendor_code }}</p>
   </div>
   <ul class="list-group list-group-flush">
@@ -21,7 +21,7 @@
     <li class="list-group-item">Количество: {{ item.quantity }} шт.</li>
   </ul>
   <div class="card-body">
-    <a class="btn btn-success" href="#">Редактировать</a>
+    <a class="btn btn-success" href="{{ url_for('edit_form', vendor_code=item.vendor_code) }}">Редактировать</a>
     <a class="btn btn-danger" href="{{ url_for('remove_form', vendor_code=item.vendor_code) }}">Удалить</a>
   </div>
 </div>
