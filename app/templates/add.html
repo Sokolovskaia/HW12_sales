@@ -5,20 +5,39 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Добавить новый товар</title>
 </head>
 <body>
 
+<div class="container">
+    <p class="h2 text-center font-weight-bold">Введите данные для нового товара</p>
 
-<form action="{{ url_for('add_product') }}" method="post">
-    <input name="vendor_code" placeholder="Артикул" required>
-    <input name="product_name" placeholder="Наименование товара" required>
-    <input name="price" placeholder="Цена" required>
-    <input name="quantity" placeholder="Количество" required>
-    <button>Add</button>
-</form>
+    <form class="form-group" action="{{ url_for('add_product') }}" method="post">
+        <div class="form-group">
+            <label for="vendor_code">Артикул</label>
+            <input class="form-control" name="vendor_code" placeholder="111111" required>
+        </div>
 
+        <div class="form-group">
+            <label for="product_name">Наименование товара</label>
+            <input class="form-control" name="product_name" placeholder="Бубен" required>
+        </div>
 
+        <div class="form-group">
+            <label for="price">Цена, руб.</label>
+            <input class="form-control" name="price" placeholder="1000" required>
+        </div>
 
+        <div class="form-group">
+            <label for="quantity">Количество, штук</label>
+            <input class="form-control" name="quantity" placeholder="1" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Добавить товар</button>
+
+    </form>
+</div>
 </body>
 </html>
