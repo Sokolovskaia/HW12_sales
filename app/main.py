@@ -10,7 +10,7 @@ from app.domain import Products
 
 def start():
     app = Flask(__name__)
-    db_url = 'data/db.sqlite'
+    db_url = 'db.sqlite'
 
     @app.route("/", methods=['GET'])
     def index():
