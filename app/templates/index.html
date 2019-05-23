@@ -11,10 +11,19 @@
 </head>
 <body>
 
+
 <div class="container">
 
 
     <p class="h2 text-left font-weight-bold">Рабочее место продавца</p>
+
+    <form>
+        <input name="search" class="form-control" placeholder="Поиск по названию или артикулу" type="search"
+               value="{{ search }}">
+
+        <button type="submit" class="btn btn-info">Искать</button>
+
+    </form>
 
     <table class="table table-hover">
         <caption class="h3 font-weight-bold text-center">Перечень товаров на складе</caption>
@@ -30,7 +39,8 @@
         <tbody>
         {% for item in items %}
         <tr>
-            <td> <a href="{{ url_for('details_of_product', vendor_code=item.vendor_code) }}">  {{ item.vendor_code }}</a></td>
+            <td><a href="{{ url_for('details_of_product', vendor_code=item.vendor_code) }}"> {{ item.vendor_code }}</a>
+            </td>
             <td>{{ item.product_name }}</td>
             <td>{{ item.price }}</td>
             <td>{{ item.quantity }}</td>

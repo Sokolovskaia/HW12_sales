@@ -87,8 +87,34 @@ def edit_by_vendor_code(connection, product):
         cursor = connection.cursor()
         cursor.execute("""
         UPDATE products 
-        SET vendor_code = :vendor_code, product_name = :product_name, price = :price, quantity = :quantity
-        WHERE vendor_code = :vendor_code
+           SET vendor_code = :vendor_code
+             , product_name = :product_name
+             , price = :price
+             , quantity = :quantity
+         WHERE vendor_code = :vendor_code
         """, {'vendor_code': product.vendor_code, 'product_name': product.product_name, 'price': product.price,
               'quantity': product.quantity})
         connection.commit()
+
+
+def search_product(connection, search):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+        SELECT vendor_code
+             , product_name
+             , price
+             , quantity
+          FROM products
+         WHERE :search=vendor_code OR :search=product_name""", {'search': search})
+        items = []
+        for row in cursor:
+            items.append(
+                Products(
+                    row['vendor_code'],
+                    row['product_name'],
+                    row['price'],
+                    row['quantity']
+                )
+            )
+        return items
