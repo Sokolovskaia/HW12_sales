@@ -22,3 +22,13 @@ class Employees:
         self.name = name
 
 
+class Statistics:
+    def __init__(self, date, vendor_code, product_name, price, quantity, seller_id, surname, name):
+        self.date = date
+        self.vendor_code = vendor_code
+        self.product_name = product_name
+        self.price = price
+        self.quantity = quantity
+        self.seller_id = seller_id
+        self.surname = surname
+        self.name = name

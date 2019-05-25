@@ -24,7 +24,9 @@
             <th scope="col">Наименование товара</th>
             <th scope="col">Цена, руб.</th>
             <th scope="col">Количество, штук</th>
-            <th scope="col">Менеджер</th>
+            <th scope="col">Код продавца</th>
+            <th scope="col">Фамилия продавца</th>
+            <th scope="col">Имя продавца</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +38,8 @@
             <td>{{ item.price }}</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.seller_id }}</td>
+            <td>{{ item.surname }}</td>
+            <td>{{ item.name }}</td>
         </tr>
         {% endfor %}
         </tbody>

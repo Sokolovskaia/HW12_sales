@@ -1,6 +1,6 @@
 import sqlite3
 
-from app.domain import Products, Sales
+from app.domain import Products, Sales, Statistics
 
 
 def open_db(url):
@@ -61,7 +61,7 @@ def get_all(connection):
         SELECT vendor_code, product_name, price, quantity  
           FROM products""")
         items = []
-        for row in cursor:  # [Row, Row] -> [Good, Good]
+        for row in cursor:
             items.append(
                 Products(
                     row['vendor_code'],
@@ -165,17 +165,23 @@ def get_statistics(connection):
     with connection:
         cursor = connection.cursor()
         cursor.execute("""
-        SELECT s.date, s.vendor_code, s.price, s.quantity, s.seller_id  
-          FROM sales s""")
+        SELECT s.date, s.vendor_code, p.product_name, s.price, s.quantity, s.seller_id, e.surname, e.name  
+          FROM sales s LEFT JOIN products p 
+            ON s.vendor_code = p.vendor_code
+     LEFT JOIN employees e 
+            ON s.seller_id = e.employee_id""")
         items = []
-        for row in cursor:  # [Row, Row] -> [Good, Good]
+        for row in cursor:
             items.append(
-                Sales(
+                Statistics(
                     row['date'],
                     row['vendor_code'],
+                    row['product_name'],
                     row['price'],
                     row['quantity'],
-                    row['seller_id']
+                    row['seller_id'],
+                    row['surname'],
+                    row['name']
                 )
             )
         return items
