@@ -1,5 +1,5 @@
 import waitress
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 from app import db
 
@@ -78,6 +78,11 @@ def start():
         quantity = int(request.form['quantity'])
         seller_id = int(request.form['seller_id'])
         sale = Sales(date, vendor_code, price, quantity, seller_id)
+        search_by_vendor_code_result = db.search_by_vendor_code(db.open_db(db_url), vendor_code)
+
+        if search_by_vendor_code_result.quantity < quantity:
+            return 'Недостаточно товара на складе'
+
         db.sale_by_vendor_code(db.open_db(db_url), sale)
         return redirect(url_for('index', vendor_code=vendor_code))
 
