@@ -7,17 +7,18 @@ class Products:
 
 
 class Sales:
-    def __init__(self, data, vendor_code, product_name, price, quantity, seller_id):
-        self.data = data
+    def __init__(self, date, vendor_code, price, quantity, seller_id):
+        self.date = date
         self.vendor_code = vendor_code
-        self.product_name = product_name
         self.price = price
         self.quantity = quantity
         self.seller_id = seller_id
 
 
 class Employees:
-    def __init__(self, seller_id, surname, name):
-        self.seller_id = seller_id
+    def __init__(self, employee_id, surname, name):
+        self.employee_id = employee_id
         self.surname = surname
         self.name = name
+
+

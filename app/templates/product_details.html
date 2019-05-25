@@ -21,6 +21,7 @@
     <li class="list-group-item">Количество: {{ item.quantity }} шт.</li>
   </ul>
   <div class="card-body">
+    <a class="btn btn-warning" href="{{ url_for('sell_form', vendor_code=item.vendor_code) }}">Продажа</a>
     <a class="btn btn-success" href="{{ url_for('edit_form', vendor_code=item.vendor_code) }}">Редактировать</a>
     <a class="btn btn-danger" href="{{ url_for('remove_form', vendor_code=item.vendor_code) }}">Удалить</a>
   </div>
