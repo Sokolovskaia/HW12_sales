@@ -185,3 +185,13 @@ def get_statistics(connection):
                 )
             )
         return items
+
+
+def sale_by_vendor_code_from_base(connection, product):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+        UPDATE products 
+           SET quantity = :quantity
+         WHERE vendor_code = :vendor_code
+        """, {'vendor_code': product.vendor_code, 'quantity': product.quantity})

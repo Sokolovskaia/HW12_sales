@@ -84,16 +84,14 @@ def start():
             return 'Недостаточно товара на складе'
 
         db.sale_by_vendor_code(db.open_db(db_url), sale)
+        search_by_vendor_code_result.quantity = search_by_vendor_code_result.quantity - quantity
+        db.sale_by_vendor_code_from_base(db.open_db(db_url), search_by_vendor_code_result)
         return redirect(url_for('index', vendor_code=vendor_code))
 
     @app.route("/statistics", methods=['GET'])
     def statistics():
         get_statistics_result = db.get_statistics(db.open_db(db_url))
         return render_template('statistics.html', items=get_statistics_result)
-
-
-
-
 
 
 
