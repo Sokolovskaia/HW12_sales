@@ -10,6 +10,21 @@
     <title>Продажа товара {{ item.product_name }} ( Артикул: {{ item.vendor_code }})</title>
 </head>
 <body>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+    {% for message in messages %}
+    <li style="color: red; font-size: 2em">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+
+
+
+
 <div class="container">
     <p class="h2 text-center font-weight-bold">Данные продажи</p>
 

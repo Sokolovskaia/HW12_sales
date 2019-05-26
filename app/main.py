@@ -10,13 +10,16 @@ from app.domain import Products, Sales, Employees
 
 def start():
     app = Flask(__name__)
+    app.config.from_mapping(
+        SECRET_KEY='Marina_secret_key',
+    )
     db_url = 'db.sqlite'
 
     @app.route("/", methods=['GET'])
     def index():
-        search = request.args.get('search')  ## ----
+        search = request.args.get('search')
         if search:
-            search_result = db.search_product(db.open_db(db_url), search)  ## ----
+            search_result = db.search_product(db.open_db(db_url), search)
             return render_template('index.html', items=search_result, search=search)
         get_all_result = db.get_all(db.open_db(db_url))
         return render_template('index.html', items=get_all_result)
@@ -64,8 +67,6 @@ def start():
         db.edit_by_vendor_code(db.open_db(db_url), product)
         return redirect(url_for('index', vendor_code=vendor_code))
 
-    # ---------------------------------------------------------------------------------
-
     @app.route("/sell/<vendor_code>", methods=['GET'])
     def sell_form(vendor_code):
         search_by_vendor_code_result = db.search_by_vendor_code(db.open_db(db_url), vendor_code)
@@ -81,7 +82,8 @@ def start():
         search_by_vendor_code_result = db.search_by_vendor_code(db.open_db(db_url), vendor_code)
 
         if search_by_vendor_code_result.quantity < quantity:
-            return 'Недостаточно товара на складе'
+            flash("Не достаточно товара на складе")
+            return redirect(url_for('sell_form', vendor_code=vendor_code))
 
         db.sale_by_vendor_code(db.open_db(db_url), sale)
         search_by_vendor_code_result.quantity = search_by_vendor_code_result.quantity - quantity
@@ -92,10 +94,6 @@ def start():
     def statistics():
         get_statistics_result = db.get_statistics(db.open_db(db_url))
         return render_template('statistics.html', items=get_statistics_result)
-
-
-
-
 
     if os.getenv('APP_ENV') == 'PROD' and os.getenv('PORT'):
         waitress.serve(app, port=os.getenv('PORT'))
